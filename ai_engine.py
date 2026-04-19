@@ -1,4 +1,3 @@
-cat > ai_engine.py << 'EOF'
 VULN_MAP = {
     "SQL Injection": {
         "explanation": "SQL Injection allows attackers to manipulate database queries by injecting malicious SQL. This can lead to data exfiltration, corruption, or bypassing authentication.",
@@ -42,4 +41,3 @@ def explain_vulns(results):
             "suggestion": base["suggestion"]
         })
     return explanations
-EOF
