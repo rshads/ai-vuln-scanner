@@ -1,8 +1,8 @@
-cat > scanner.py << 'EOF'
 import tempfile
 import subprocess
 import json
 import os
+import sys
 
 VULN_PATTERNS = [
     {
@@ -39,6 +39,7 @@ def scan_code(code):
         tmp_path = tmp.name
     results = []
     try:
+        # For Windows: shell=True is safer for UTF-8 output in some versions.
         proc = subprocess.run(
             [
                 "semgrep",
@@ -48,7 +49,8 @@ def scan_code(code):
             ],
             capture_output=True,
             text=True,
-            check=False
+            check=False,
+            shell=(os.name == "nt")
         )
         if proc.returncode not in (0, 1):
             return []
@@ -88,4 +90,3 @@ def scan_code(code):
         except Exception:
             pass
     return results
-EOF
