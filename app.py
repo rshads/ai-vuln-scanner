@@ -1,7 +1,7 @@
-cat > app.py << 'EOF'
 import gradio as gr
 from scanner import scan_code
 from ai_engine import explain_vulns
+import os
 
 APP_TITLE = "AI Vulnerability Scanner Pro"
 APP_DESCRIPTION = (
@@ -39,7 +39,7 @@ def scan_and_explain(code):
         """
     return (gr.update(value='', visible=False), gr.update(value=display, visible=True))
 
-with gr.Blocks(css="assets/styles.css", theme=gr.themes.Base()) as demo:
+with gr.Blocks(css="assets\\styles.css", theme=gr.themes.Base()) as demo:
     gr.Markdown(f"<h1>{APP_TITLE}</h1><div>{APP_DESCRIPTION}</div>")
     with gr.Row():
         code_input = gr.Code(
@@ -69,4 +69,3 @@ with gr.Blocks(css="assets/styles.css", theme=gr.themes.Base()) as demo:
 
 if __name__ == "__main__":
     demo.launch()
-EOF
