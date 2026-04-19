@@ -1,26 +1,43 @@
-def generate_report(findings, ai_engine):
-    if not findings:
-        return "✅ CLEAN CODE — No vulnerabilities detected."
+def generate_report(results):
 
-    report = "🔐 ENTERPRISE SECURITY REPORT\n"
-    report += "=" * 50 + "\n\n"
+    if not results:
+        return "✅ No vulnerabilities found. Code looks clean."
 
-    for f in findings:
-        ai = ai_engine(f)
+    report = "🔐 SECURITY SCAN REPORT\n"
+    report += "=" * 60 + "\n\n"
+
+    for r in results:
+
+        color = {
+            "CRITICAL": "🔴",
+            "HIGH": "🟠",
+            "MEDIUM": "🟡"
+        }.get(r["severity"], "⚪")
 
         report += f"""
-🚨 TYPE: {f['type']}
-⚠ SEVERITY: {f['severity']}
-📍 LINE: {f['line']}
-💻 CODE: {f['code']}
+📁 File: {r['file']}
+{color} Type: {r['type']}
+⚠ Severity: {r['severity']}
+📍 Line: {r['line']}
+💻 Code: {r['code']}
 
-🧠 DESCRIPTION:
-{ai['description']}
+💡 Recommendation:
+Fix this issue to improve security.
 
-🛠 FIX:
-{ai['fix']}
+----------------------------------------
+"""
 
---------------------------------------
+    # Summary
+    total = len(results)
+    critical = len([r for r in results if r["severity"] == "CRITICAL"])
+    high = len([r for r in results if r["severity"] == "HIGH"])
+
+    report += f"""
+
+📊 SUMMARY
+Total Issues: {total}
+Critical: {critical}
+High: {high}
 """
 
     return report
