@@ -1,27 +1,62 @@
-import re
-from .severity import calculate_severity
+def scan_files(files):
+    results = []
 
-def scan_code(code):
-    findings = []
-    lines = code.split("\n")
+    for file in files:
+        content = file.read().decode("utf-8", errors="ignore")
+        lines = content.split("\n")
 
-    for i, line in enumerate(lines, 1):
+        for i, line in enumerate(lines, 1):
 
-        checks = [
-            ("SQL Injection", r"SELECT .* ['\"].*\+"),
-            ("Command Injection", r"os\.system|subprocess"),
-            ("XSS", r"render_template_string|innerHTML"),
-            ("Code Injection", r"eval\(|exec\("),
-            ("Hardcoded Secret", r"password\s*=\s*['\"]")
-        ]
+            line_lower = line.lower()
 
-        for vuln, pattern in checks:
-            if re.search(pattern, line):
-                findings.append({
-                    "type": vuln,
-                    "severity": calculate_severity(vuln),
+            # 🔴 Command Injection
+            if "os.system" in line or "subprocess" in line:
+                results.append({
+                    "file": file.name,
+                    "type": "Command Injection",
+                    "severity": "CRITICAL",
                     "line": i,
                     "code": line.strip()
                 })
 
-    return findings
+            # 🔴 Code Injection
+            if "eval(" in line or "exec(" in line:
+                results.append({
+                    "file": file.name,
+                    "type": "Code Injection",
+                    "severity": "CRITICAL",
+                    "line": i,
+                    "code": line.strip()
+                })
+
+            # 🔴 SQL Injection
+            if "select" in line_lower and ("+" in line or "'" in line):
+                results.append({
+                    "file": file.name,
+                    "type": "SQL Injection",
+                    "severity": "HIGH",
+                    "line": i,
+                    "code": line.strip()
+                })
+
+            # 🟠 XSS
+            if "render_template_string" in line:
+                results.append({
+                    "file": file.name,
+                    "type": "XSS",
+                    "severity": "HIGH",
+                    "line": i,
+                    "code": line.strip()
+                })
+
+            # 🟡 Hardcoded Secret
+            if "password" in line_lower and "=" in line:
+                results.append({
+                    "file": file.name,
+                    "type": "Hardcoded Secret",
+                    "severity": "MEDIUM",
+                    "line": i,
+                    "code": line.strip()
+                })
+
+    return results
