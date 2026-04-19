@@ -1,10 +1,3 @@
-
----
-
-### 6️⃣ إنشاء ملف `example_vulnerable_code.py`
-
-```bash
-cat > example_vulnerable_code.py << 'EOF'
 import sqlite3
 import subprocess
 from flask import Flask, request, render_template_string
@@ -38,4 +31,3 @@ def ping():
     # Insecure: user input in subprocess
     output = subprocess.check_output(f"ping -c 1 {host}", shell=True)
     return output
-EOF
