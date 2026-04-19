@@ -21,8 +21,11 @@ A professional AI-powered static analysis tool for detecting security vulnerabil
 2. **Click "Scan"** — Semgrep analyzes the code for vulnerabilities.
 3. **View Results:** All detected issues appear as cards, with type, file/line, severity, explanation, and a remediation suggestion.
 
----
-
+```bash
+cd path\to\ai-vuln-scanner-pro
+pip install -r requirements.txt
+python app.py
+```
 ## 📝 Installation
 
 > **Ensure you have [Python 3](https://www.python.org/downloads/) and [Semgrep](https://semgrep.dev/docs/getting-started/) installed.**
