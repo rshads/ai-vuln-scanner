@@ -1,0 +1,59 @@
+cat > assets/styles.css << 'EOF'
+body, .gradio-container {
+    background: #181c24 !important;
+    color: #ededed !important;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif !important;
+}
+h1 {
+    color: #49e1ff;
+}
+#code-input textarea, .gr-code-input {
+    background: #23272f !important;
+    color: #ededed !important;
+    font-size: 1.1em;
+}
+#scan-btn {
+    background: linear-gradient(90deg,#1fa2ff,#12d8fa,#a6ffcb) !important;
+    color: #181c24 !important;
+    font-weight: bold;
+    border: none;
+    border-radius: 7px;
+}
+.vuln-card {
+    background: #222731;
+    border-radius: 9px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px #1114  ;
+}
+.vuln-type {
+    color: #eee;
+    font-weight: bold;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+.vuln-sev {
+    color: #fff;
+    padding: 2px 14px;
+    margin-left: 10px;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: 0.97em;
+    letter-spacing: .5px;
+}
+.vuln-meta {
+    margin-top: 5px;
+    opacity: 0.8;
+    font-size: 0.98em;
+}
+.vuln-exp, .vuln-fix {
+    margin-top: 7px;
+    font-size: 1em;
+}
+hr {
+    background: #23272f;
+    border: 0;
+    height: 2px;
+    margin: 16px 0;
+}
+EOF
